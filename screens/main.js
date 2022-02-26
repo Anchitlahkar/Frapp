@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, SafeAreaView, StatusBar, Platform } from "react
 import { Camera } from "expo-camera"
 import * as Permissions from "expo-permissions"
 import * as FaceDetector from "expo-face-detector"
+import Filter1 from "./filter1"
 
 export default class Main extends React.Component {
     constructor() {
@@ -13,6 +14,9 @@ export default class Main extends React.Component {
             faces: [],
 
         }
+        this.onCameraPermission = this.onCameraPermission.bind(this)
+        this.onFacesDetected = this.onFacesDetected.bind(this)
+        this.onFacesDetectionError = this.onFacesDetectionError.bind(this)
     }
 
     onCameraPermission = (status) => {
@@ -25,6 +29,7 @@ export default class Main extends React.Component {
         this.setState({
             faces: faces
         })
+       
     }
 
     onFacesDetectionError = (error) => {
@@ -78,6 +83,11 @@ export default class Main extends React.Component {
                             this.onFacesDetectionError
                         }
                     />
+                    {
+                        this.state.faces.map(face=>{
+                            return <Filter1 key={face.faceID} face={face}/>
+                        })
+                    }
 
                 </View>
 
