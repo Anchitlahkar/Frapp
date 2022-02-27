@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image } from "react-native"
 
-const Filter1 = ({
+const Filter2 = ({
     face: {
         bounds: {
             size: {
@@ -9,22 +9,23 @@ const Filter1 = ({
                 height: faceHeight
             }
         },
-        LEFT_EYE: leftEyePosition,
-        RIGHT_EYE: rightEyePosition
+        LEFT_EYE: leftEye,
+        RIGHT_EYE: rightEye,
     }
 }) => {
     const glassWidth = faceWidth
     const glassHeight = faceHeight / 3
 
+
     const transformAngle = (
-        angleRad = Math.atan((rightEyePosition.y - leftEyePosition.y) / (rightEyePosition.x - leftEyePosition.x))
+        angleRad = Math.atan((rightEye.y - leftEye.y) / (rightEye.x - leftEye.x))
     ) => angleRad * 180 / Math.PI
 
     return (
         <View style={{
             position: "absolute",
-            left: leftEyePosition.x - glassWidth * 0.675,
-            top: leftEyePosition.y - glassHeight * 0.5,
+            left: leftEye.x - glassWidth * 0.675,
+            top: leftEye.y - glassHeight * 0.5,
         }} >
             <Image
                 style={{
@@ -37,8 +38,8 @@ const Filter1 = ({
                         }
                     ]
                 }}
-                source={require("../assets/filters/glasses.png")} />
+                source={require("../assets/filters/glasses2.png")} />
         </View>
     )
 }
-export default Filter1
+export default Filter2
