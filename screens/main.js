@@ -19,38 +19,73 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
 
 import Filter1 from './filter1'
 import Filter2 from './filter2';
-import Filter4 from './filter4';
 import Filter3 from './filter3';
+import Filter4 from './filter4';
 import Filter5 from './filter5';
 import Filter6 from './filter6';
+import Filter7 from './filter7';
+import Filter8 from './filter8';
+import Filter9 from './filter9';
+import Filter10 from './filter10';
 
 
-let data = [
-    {
-        "id": "1",
-        "image": require("../assets/filters/glasses.png")
-    },
-    {
-        "id": "2",
-        "image": require("../assets/filters/glasses2.png")
-    },
-    {
-        "id": "3",
-        "image": require("../assets/filters/Frapp-02.png")
-    },
-    {
-        "id": "4",
-        "image": require("../assets/filters/Frapp-03.png")
-    },
-    {
-        "id": "5",
-        "image": require("../assets/filters/Frapp-04.png")
-    },
-    {
-        "id": "6",
-        "image": require("../assets/filters/Frapp-06.png")
-    },
-]
+let data = {
+    "regular": [
+        {
+            "id": "1",
+            "image": require("../assets/filters/glasses.png")
+        },
+    ],
+
+    "wayfarer": [
+        {
+            "id": "4",
+            "image": require("../assets/filters/Frapp-03.png")
+        },
+        {
+            "id": "5",
+            "image": require("../assets/filters/Frapp-04.png")
+        },
+        {
+            "id": "9",
+            "image": require("../assets/filters/Frapp-08.png")
+        },
+    ],
+
+    "rimless": [
+        {
+            "id": "10",
+            "image": require("../assets/filters/Frapp-09.png")
+        },
+    ],
+
+    "round": [
+        {
+            "id": "2",
+            "image": require("../assets/filters/glasses2.png")
+        },
+        {
+            "id": "3",
+            "image": require("../assets/filters/Frapp-02.png")
+        },
+    ],
+
+    "aviator": [
+        {
+            "id": "6",
+            "image": require("../assets/filters/Frapp-05.png")
+        },
+        {
+            "id": "7",
+            "image": require("../assets/filters/Frapp-06.png")
+        },
+        {
+            "id": "8",
+            "image": require("../assets/filters/Frapp-07.png")
+        },
+    ]
+}
+
 
 
 export default class Main extends React.Component {
@@ -59,7 +94,8 @@ export default class Main extends React.Component {
         this.state = {
             hasCameraPermission: null,
             faces: [],
-            current_filter: "Filter_1"
+            current_filter: "Filter_1",
+            selected: "regular",
         }
         this.onCameraPermission = this.onCameraPermission.bind(this)
         this.onFacesDetected = this.onFacesDetected.bind(this)
@@ -151,14 +187,77 @@ export default class Main extends React.Component {
                                 return <Filter6 key={face.faceID} face={face} />
                             }
 
+                            else if (this.state.current_filter === "filter_7") {
+                                return <Filter7 key={face.faceID} face={face} />
+                            }
+
+                            else if (this.state.current_filter === "filter_8") {
+                                return <Filter8 key={face.faceID} face={face} />
+                            }
+
+                            else if (this.state.current_filter === "filter_9") {
+                                return <Filter9 key={face.faceID} face={face} />
+                            }
+
+                            else if (this.state.current_filter === "filter_10") {
+                                return <Filter10 key={face.faceID} face={face} />
+                            }
+
                         })
                     }
                 </View>
 
                 <View style={styles.framesContainer}>
+                    <View style={styles.categoryContainer}>
+                        <TouchableOpacity
+                            style={
+                                this.state.selected == "regular" ? styles.categoryBoxSelected : styles.categoryBox
+                            }
+                            onPress={() => { this.setState({ selected: "regular" }) }}
+                        >
+                            <Text>Regular</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={
+                                this.state.selected == "wayfarer" ? styles.categoryBoxSelected : styles.categoryBox
+                            }
+                            onPress={() => { this.setState({ selected: "wayfarer" }) }}
+                        >
+                            <Text>wayfarer</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={
+                                this.state.selected == "rimless" ? styles.categoryBoxSelected : styles.categoryBox
+                            }
+                            onPress={() => { this.setState({ selected: "rimless" }) }}
+                        >
+                            <Text>rimless</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={
+                                this.state.selected == "round" ? styles.categoryBoxSelected : styles.categoryBox
+                            }
+                            onPress={() => { this.setState({ selected: "round" }) }}
+                        >
+                            <Text>round</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={
+                                this.state.selected == "aviator" ? styles.categoryBoxSelected : styles.categoryBox
+                            }
+                            onPress={() => { this.setState({ selected: "aviator" }) }}
+                        >
+                            <Text>aviator</Text>
+                        </TouchableOpacity>
+
+                    </View>
                     <ScrollView style={{ flexDirection: "row", }} horizontal showsHorizontalScrollIndicator={false}>
                         {
-                            data.map(filter_data => {
+                            data[this.state.selected].map(filter_data => {
                                 return (
                                     <TouchableOpacity
                                         style={styles.filterImageContainer}
@@ -262,6 +361,35 @@ const styles = StyleSheet.create({
         backgroundColor: "#e4e7f8",
         borderRadius: 30,
         marginRight: 20,
+    },
+    categoryContainer: {
+        flex: 0.4,
+        justifyContent: "center",
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginBottom: RFValue(10)
+    },
+    categoryBox: {
+        flex: 0.2,
+        borderRadius: 30,
+        borderWidth: 1,
+        backgroundColor: "white",
+        width: "100%",
+        // padding: RFValue(3),
+        margin: 1,
+        alignItems: 'center',
+        height: 20
+    },
+    categoryBoxSelected: {
+        flex: 0.2,
+        borderRadius: 30,
+        borderWidth: 1,
+        backgroundColor: "#efb141",
+        width: "100%",
+        // padding: RFValue(3),
+        margin: 1,
+        alignItems: 'center',
+        height: 20
     }
 
 });
