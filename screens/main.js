@@ -114,6 +114,7 @@ export default class Main extends React.Component {
 
     onFacesDetected({ faces }) {
         this.setState({ faces: faces })
+        console.log(faces)
     }
 
     onFaceDetectionError(error) {
